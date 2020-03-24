@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Calculator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width, initial scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script type="module" src="js/main.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="text-center">
+            <h1>My calculator</h1>
+        </div>
+        <div class="Choose operation">
+            <select name="Operation" id="op" class="form-control">
+                <option>Calculator</option>
+                <option>Converter</option>
+            </select>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="buttonsTable">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <button id="1" type="button" class="">1</button>
+                                </td>
+                                <td>
+                                    <button id="2" type="button" class="">2</button>
+                                </td>
+                                <td>
+                                    <button id="3" type="button" class="">3</button>
+                                </td>
+                                <td>
+                                    <button id="plus" type="button" class="">+</button>
+                                </td>
+                            <tr>
+                                <td>
+                                    <button id="4" type="button" class="">4</button>
+                                </td>
+                                <td>
+                                    <button id="5" type="button" class="">5</button>
+                                </td>
+                                <td>
+                                    <button id="6" type="button" class="">6</button>
+                                </td>
+                                <td>
+                                    <button id="minus" type="button" class="">-</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button id="7" type="button" class="">7</button>
+                                </td>
+                                <td>
+                                    <button id="8" type="button" class="">8</button>
+                                </td>
+                                <td>
+                                    <button id="9" type="button" class="">9</button>
+                                </td>
+                                <td>
+                                    <button id="multiple" type="button" class="">*</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button id="0" type="button" class="">0</button>
+                                </td>
+                                <td>
+                                    <button id="Erase" type="button" class="">AC</button>
+                                </td>
+                                <td>
+                                    <button id="res" type="button" class="">=</button>
+                                </td>
+                                <td>
+                                    <button id="divide" type="button" class="">/</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="Calculator out">
+                    <input id="num1" class="form-control" type="text" placeholder="number one" readonly>
+                    <input id="num2" class="form-control" type="text" placeholder="number two" readonly>
+                    <input id="Result" class="form-control" type="text" placeholder="Result" readonly>
+                </div>
+                <div class="ConverterOut">
+                    <select name="From - to" id="Cop" class="form-control">
+                        <option>Digit - binary</option>
+                        <option>Binary - digit</option>
+                    </select>
+                    <input id="convnum" class="form-control" type="text" placeholder="Number to convert" readonly>
+                    <input id="convresult" class="form-control" type="text" placeholder="Convertation result" readonly>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="History">
+                    <textarea id="his" class="form-control" placeholder="Your history hear" readonly></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
