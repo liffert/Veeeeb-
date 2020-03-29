@@ -9,7 +9,21 @@ export default class controller {
 
         this.ConvOp = "";
 
-        document.querySelector(".buttonsTable").addEventListener("click", (e) => this.onClick(e));
+        if(window.Worker){
+            this.worker = new Worker("./WebWorker/web_worker.js");
+            this.worker.onmessage = function(e){
+                document.getElementById("convresult").value = e.data[0];
+                document.getElementById("his").value = document.getElementById("his").value + e.data[1];
+            }
+        }
+        document.querySelector(".buttonsTable").addEventListener("click", (e) => this.onButtonClick(e));
+
+        this.butMap = new Map();
+        this.butMap.set("divide", "/");
+        this.butMap.set("pow", "^");
+        this.butMap.set("plus", "+");
+        this.butMap.set("minus", "-");
+        this.butMap.set("multiple", "*");
     }
 
     out(num) {
@@ -42,7 +56,7 @@ export default class controller {
 
     convertation(e){
         if (e.target.id === "res") {
-            this.model.convertation(this.ConvOp, document.getElementById("Cop").value);
+            this.worker.postMessage([this.ConvOp, document.getElementById("Cop").value]);
             this.ConvOp = "";
             this.view.out("convnum", "");
         }
@@ -53,7 +67,7 @@ export default class controller {
             this.outConv(e.target.id);
         }
     }
-    onClick(e) {
+    onButtonClick(e) {
         if(document.getElementById("CC").value == "Converter"){
             this.convertation(e);
             return;
@@ -77,27 +91,15 @@ export default class controller {
         else if (e.target.id === "Erase") {
             this.erase();
         }
-        else if (e.target.id === "divide") {
-            this.op = "/";
-            this.view.out("op", this.op);
+        var flag = false;
+        for(var [key, value] of this.butMap){
+            if(e.target.id === key){
+                this.op = value;
+                this.view.out("op", this.op);
+                flag = true;
+            }
         }
-        else if (e.target.id === "minus") {
-            this.op = "-";
-            this.view.out("op", this.op);
-        }
-        else if (e.target.id === "pow") {
-            this.op = "^";
-            this.view.out("op", this.op);
-        }
-        else if (e.target.id === "plus") {
-            this.op = "+";
-            this.view.out("op", this.op);
-        }
-        else if (e.target.id === "multiple") {
-            this.op = "*";
-            this.view.out("op", this.op);
-        }
-        else {
+        if(!flag) {
             this.out(e.target.id);
         }
     }

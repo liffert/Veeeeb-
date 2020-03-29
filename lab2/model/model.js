@@ -3,17 +3,10 @@ export default class model{
         this.ERROR = false;
         this.result = null;
         this.history = "";
-
-        if(window.Worker){
-            this.worker = new Worker("./model/web_worker.js");
-            this.worker.onmessage = function(e){
-                document.getElementById("convresult").value = e.data[0];
-                document.getElementById("his").value = document.getElementById("his").value + e.data[1];
-            }
-        }
     }
 
     operation(first, second, op){
+        this.result = NaN;
         this.ERROR = false;
         if(op == "+"){
             this.result = first + second;
@@ -44,8 +37,5 @@ export default class model{
         }
     }
 
-    convertation(operand, operation){
-        this.worker.postMessage([operand, operation]);
-    }
 
 }
