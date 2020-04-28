@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import CalcBlock from "./components/CalcBlock";
 import ChooseOperation from "./components/ChooseOperation";
 import CaclOut from "./components/CalcOut";
@@ -94,7 +94,7 @@ class App extends React.Component {
     }
     if (isNaN(result) || this.state.op === "") {
       this.setState({
-        history : this.state.history + first.toString() + this.state.op + second.toString() + "=" + "ERROR\n",
+        history : this.state.history + first.toString() + this.state.op + second.toString() + "= ERROR\n",
         result : "ERROR"
       });
     }
@@ -136,7 +136,7 @@ class App extends React.Component {
       this.erase();
       return;
     }
-    for (var [key, value] of this.butMap) {
+    for (var key of this.butMap.keys()) {
       if (e.target.id === key) {
         return;
       }
