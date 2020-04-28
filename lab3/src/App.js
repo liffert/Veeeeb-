@@ -4,11 +4,14 @@ import ChooseOperation from "./components/ChooseOperation";
 import CaclOut from "./components/CalcOut";
 import ConverterOut from "./components/ConverterOut";
 import History from "./components/History";
+import Model from "./Model";
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
+    this.model = new Model();
+
     this.operation = "Calculator";
     this.convstate = "Digit - binary";
     this.state = ({
@@ -37,7 +40,7 @@ class App extends React.Component {
     this.operation = e.target.value;
   }
 
-  setConvOperation(e){
+  setConvOperation(e) {
     this.convstate = e.target.value;
   }
 
@@ -56,9 +59,9 @@ class App extends React.Component {
   }
 
   setOutConv(e) {
-      this.setState({
-        convop: this.state.convop + e.target.id,
-      });
+    this.setState({
+      convop: this.state.convop + e.target.id,
+    });
   }
 
   erase() {
@@ -73,61 +76,22 @@ class App extends React.Component {
     });
   }
 
-  calculate(first, second) {
-    var result = NaN;
-    if (this.state.op === "+") {
-      result = first + second;
-    }
-    else if (this.state.op === "-") {
-      result = first - second;
-    }
-    else if (this.state.op === "/") {
-      if (second !== 0) {
-        result = first / second;
-      }
-    }
-    else if (this.state.op === "*") {
-      result = first * second;
-    }
-    else if (this.state.op === "^") {
-      result = Math.pow(first, second);
-    }
-    if (isNaN(result) || this.state.op === "") {
-      this.setState({
-        history : this.state.history + first.toString() + this.state.op + second.toString() + "= ERROR\n",
-        result : "ERROR"
-      });
-    }
-    else {
-      this.setState({
-        history : this.state.history + first.toString() + this.state.op + second.toString() + "=" + result.toString() + "\n",
-        result : result
-      });
-    }
-  }
 
   converter(e) {
     if (e.target.id === "res") {
-      var result = null;
-      if(this.convstate === "Digit - binary"){
-        result = parseInt(this.state.convop).toString(2);
-      }
-      else{
-        result = parseInt(this.state.convop, 2).toString(10);
-      }
-
-      if(isNaN(result)){
+      var result = this.model.convertation(this.state.convop, this.convstate);
+      if (isNaN(result)) {
         this.setState({
-          convresult : "ERROR",
-          convop : "",
-          history : this.state.history + this.state.convop + " " + this.convstate + " ERROR\n"
+          convresult: "ERROR",
+          convop: "",
+          history: this.state.history + this.state.convop + " " + this.convstate + " ERROR\n"
         });
       }
-      else{
+      else {
         this.setState({
-          convresult : result,
-          convop : "",
-          history : this.state.history + this.state.convop + " " + this.convstate + " " + result + "\n"
+          convresult: result,
+          convop: "",
+          history: this.state.history + this.state.convop + " " + this.convstate + " " + result + "\n"
         });
       }
       return;
@@ -151,7 +115,19 @@ class App extends React.Component {
       return;
     }
     if (e.target.id === "res") {
-      this.calculate(parseInt(this.state.firstOp), parseInt(this.state.secondOp));
+      var result = this.model.calculate(parseInt(this.state.firstOp), parseInt(this.state.secondOp), this.state.op);
+      if (isNaN(result) || this.state.op === "") {
+        this.setState({
+          history: this.state.history + this.state.firstOp + this.state.op + this.state.secondOp + "= ERROR\n",
+          result: "ERROR"
+        });
+      }
+      else {
+        this.setState({
+          history: this.state.history + this.state.firstOp + this.state.op + this.state.secondOp + "=" + result.toString() + "\n",
+          result: result
+        });
+      }
       this.setState({
         firstOp: "",
         secondOp: "",
@@ -192,8 +168,8 @@ class App extends React.Component {
               second={this.state.secondOp}
               op={this.state.op}
               result={this.state.result} />
-            <ConverterOut 
-              operand={this.state.convop} 
+            <ConverterOut
+              operand={this.state.convop}
               result={this.state.convresult}
               change={this.setConvOperation} />
           </div>
